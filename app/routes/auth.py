@@ -44,12 +44,19 @@ def register():
 @auth_bp.route('/profile', methods=['GET'])
 @jwt_required()
 def profile():
-    current_user_id = get_jwt_identity()
-    current_user_id = int(current_user_id)
-    profile, error = auth_service.get_user_profile(current_user_id)
-    
-    if error:
-        return jsonify({"message": error}), 404
-    
-    return jsonify(profile), 200
+    try:
+        current_user_id = get_jwt_identity()
+        if current_user_id is None:
+            return jsonify({"message": "Invalid token"}), 401
+            
+        # Ensure user_id is an integer
+        current_user_id = int(current_user_id)
+        profile, error = auth_service.get_user_profile(current_user_id)
+        
+        if error:
+            return jsonify({"message": error}), 404
+        
+        return jsonify(profile), 200
+    except Exception as e:
+        return jsonify({"message": f"Authentication error: {str(e)}"}), 401
 
