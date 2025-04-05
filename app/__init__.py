@@ -31,8 +31,9 @@ def create_app():
         db.create_all()
     
     # Register blueprints
-    from app.routes import tasks_bp, auth_bp
+    from app.routes import tasks_bp, auth_bp, health_bp
     app.register_blueprint(tasks_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(health_bp)
     
     return app
