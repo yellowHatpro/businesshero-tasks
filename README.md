@@ -19,7 +19,23 @@ A Flask backend with PostgreSQL integration. Example application for a task dash
 
 5. Run the application:
    ```
-   uv run main.py
+   uv run asgi.py
+   ```
+
+## Docker
+
+To run the application using Docker:
+
+1. Build the Docker image:
+
+   ```
+   docker build -t businesshero-tasks .
+   ```
+
+2. Run the container with environment variables:
+
+   ```
+   docker run -p 5000:5000 --env-file .env businesshero-tasks
    ```
 
 ## Requirements
